@@ -3,31 +3,33 @@
 class Database
 {
 
-    $dbHost = "localhost";
-    $dbName = "burger_code";
-    $dbUser = "root";
-    $dbUserPassword = "";
+    private static $dbHost = "localhost";
+    private static $dbName = "burger_code";
+    private static $dbUser = "root";
+    private static $dbUserPassword = "";
 
-    $connection = null;
+    private static $connection = null;
 
-    function connect() 
+    public static function connect() 
     {
 
         try
         {
-            $connection = new PDO("mysql:host=" . $dbHost . ";dbname= " . $dbName,$dbUser,$dbUserPassword);
+            self::$connection = new PDO("mysql:host=" . self::$dbHost . ";dbname=" . self::$dbName,self::$dbUser,self::$dbUserPassword);
         }
         catch(PDOException $e)
         {
             die($e->getMessage());
         }
-        return $connection
+        return self::$connection;
     }
 
-    function disconnect()
+    public static function disconnect()
     {
-        $connection = null;
+        self::$connection = null;
     }
 }
+
+Database::connect();
 
 ?>
